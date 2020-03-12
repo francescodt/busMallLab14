@@ -3,7 +3,10 @@
 'use strict';
 
 // Set up an empty cart for use on this page.
-var cart = new Cart([]);
+
+var cart =  new Cart(JSON.parse(localStorage.getItem('cart'))|| []);
+
+console.log(cart);
 
 // On screen load, we call this method to put all of the busmall options
 // (the things in the Product.allProducts array) into the drop down list.
@@ -28,12 +31,17 @@ function handleSubmit(event) {
 console.log('submit was clicked');
   // TODO: Prevent the page from reloading
   event.preventDefault();
+  var amountOfItems = parseInt(document.getElementById('quantity').value);
+  if (isNaN(amountOfItems)){
+    alert('Please enter a Quantity!');
+  }else {
+
   // Do all the things ...
   addSelectedItemToCart();
   cart.saveToLocalStorage();
   updateCounter();
   updateCartPreview();
-
+  }
 }
 var newCartItem = [];
 // TODO: Add the selected item and quantity to the cart
@@ -46,9 +54,9 @@ function addSelectedItemToCart() {
   // console.log(amountOfItems);
   // TODO: using those, add one item to the Cart
    newCartItem = [selectedItem, amountOfItems];
-  // console.log(newCartItem);
-  cart.items.push(newCartItem);
-  // console.log(cart);
+  console.log(newCartItem);
+  cart.addItem(newCartItem[0], newCartItem[1]);
+  console.log(cart);
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
