@@ -8,13 +8,15 @@ var cart;
 
 function loadCart() {
   var cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  console.log(Array.isArray(cartItems));
   cart = new Cart(cartItems);
+  console.log(cart.items);
 }
 
 // Make magic happen --- re-pull the Cart, clear out the screen and re-draw it
 function renderCart() {
   loadCart();
-  clearCart();
+  // clearCart();
   showCart();
 }
 
@@ -23,6 +25,21 @@ function clearCart() {}
 
 // TODO: Fill in the <tr>'s under the <tbody> for each item in the cart
 function showCart() {
+  var cartLocation = document.getElementById('cart');
+  for (var i = 0; i < cart.items.length; i++) {
+        var tableRow = document.createElement('tr');
+        var firstTD = document.createElement('td');
+        firstTD.textContent = "x"
+        var quantityTD = document.createElement('td');
+        quantityTD.textContent = cart.items[i].quantity;
+        // console.log(cart.items[i].quantity);
+        var itemTD = document.createElement('td');
+        itemTD.textContent = cart.items[i].product;
+        tableRow.appendChild(firstTD);
+        tableRow.appendChild(quantityTD);
+        tableRow.appendChild(itemTD);
+        cartLocation.appendChild(tableRow);
+  }
 
   // TODO: Find the table body
 
